@@ -1,0 +1,4 @@
+beautifulSoup4
+html5lib
+requests
+sqlalchemy

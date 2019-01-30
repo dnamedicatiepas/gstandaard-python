@@ -111,7 +111,73 @@ def create_class(file_no):
     if table_name in relationships:
         code += '\n'
         for rel in relationships[table_name]:
-            code += '    %s = relationship(%s)\n' % (rel, relationships[table_name][rel])
+            entry = relationships[table_name][rel]
+            # print('Entry:', entry)
+
+            if not isinstance(entry, str):
+                uselist = True
+                assert len(entry) == 1
+                entry = entry[0]
+            else:
+                uselist = False
+
+            if ',' not in entry:
+                # scalar entry
+
+                if '==' not in entry:
+                    # simple relationship
+                    desc = entry
+                else:
+                    # complex relationship
+                    local, remote = entry.split('==')
+
+                    local_table, local_column = local.split('.')
+                    remote_table, remote_column = remote.split('.')
+
+                    if local_table == remote_table:
+                        # Self referencing
+                        pass
+                    else:
+                        # non-self reference
+                        # example: 'nee_actie': "'bst_693', primaryjoin='bst_691.mfbpna==bst_693.mfbanr'"
+                        desc = "'%s', primaryjoin=%s==%s" % (remote_table, local, remote)
+
+            else:
+                # Multiple entries
+                # example: 'ja_flow': "'bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)'",
+                #           ja_flow = relationship('bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin=and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr))
+                remote_columns = []
+                remote_tables = []
+                entries = [x.strip() for x in entry.split(',')]
+                for one in entries:
+                    # print('One:', one)
+                    local, remote = one.split('==')
+
+                    if '.' in local:
+                        local_table, local_column = local.split('.')
+                    else:
+                        local_table, local_column = None, None
+
+                    remote_table, remote_column = remote.split('.')
+                    remote_columns.append(remote_column)
+                    remote_tables.append(remote_table)
+
+                primary = 'and_(%s)' % ', '.join(entries)
+
+                # print('primary:', primary)
+
+                desc = "'%s'" % remote_table
+                # todo: always set uselist?
+                if uselist:
+                    desc += ', uselist=True'
+                if local_table == remote_table:
+                    assert len(set(remote_tables)) == 1
+                    desc += ', remote_side=[%s]' % ', '.join(remote_columns)
+                desc += ", primaryjoin='%s'" % primary
+
+
+
+            code += '    %s = relationship(%s)\n' % (rel, desc)
 
     if table_name in aggregates:
         for new_entry in aggregates[table_name]:

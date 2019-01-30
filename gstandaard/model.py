@@ -130,7 +130,7 @@ class bst_691(Base):
         return "<MFB: Protocol flow(%d)[mutkod=%s, mfbpjk=%s, mfbpja=%s, mfbpnk=%s, mfbpna=%s, mfbvnr=%s, mfbpnr=%s, mfbpnrv=%s, mfbknr=%s]>" % (self.bstnum, self.mutkod, self.mfbpjk, self.mfbpja, self.mfbpnk, self.mfbpna, self.mfbvnr, self.mfbpnr, self.mfbpnrv, self.mfbknr)
 
     vraag = relationship("bst_692")
-    ja_flow = relationship('bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)')
+    ja_flow = relationship('bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpjk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)')
     nee_flow = relationship('bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)')
     ja_actie = relationship('bst_693', primaryjoin='bst_691.mfbpja==bst_693.mfbanr')
     nee_actie = relationship('bst_693', primaryjoin='bst_691.mfbpna==bst_693.mfbanr')
@@ -182,7 +182,7 @@ class bst_693(Base):
     def __repr__(self):
         return "<MFB: Actie(%d)[mutkod=%s, mfbaoms=%s, mfbajn=%s, mfbmon=%s, thmodu=%s, txmodu=%s, mfbanr=%s]>" % (self.bstnum, self.mutkod, self.mfbaoms, self.mfbajn, self.mfbmon, self.thmodu, self.txmodu, self.mfbanr)
 
-    teksten = relationship('bst_921', uselist=True, primaryjoin='and_(bst_921.txkode==bst_693.mfbanr, bst_921.txmodu==bst_693.txmodu, bst_921.txtsrt==240)')
+    teksten = relationship('bst_921', uselist=True, primaryjoin='and_(bst_693.mfbanr==bst_921.txkode, bst_693.txmodu==bst_921.txmodu, 240==bst_921.txtsrt)')
     bouwstenen = relationship("bst_694")
 
     @hybrid_property

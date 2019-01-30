@@ -102,11 +102,11 @@ relationships = {
     'bst_691': {
         'vraag': '"bst_692"',
 
-        'ja_flow': "'bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)'",
-        'nee_flow': "'bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)'",
+        'ja_flow': 'bst_691.mfbpjk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr',
+        'nee_flow': 'bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr',
 
-        'ja_actie': "'bst_693', primaryjoin='bst_691.mfbpja==bst_693.mfbanr'",
-        'nee_actie': "'bst_693', primaryjoin='bst_691.mfbpna==bst_693.mfbanr'"
+        'ja_actie': "'bst_691.mfbpja==bst_693.mfbanr'",
+        'nee_actie': "'bst_691.mfbpna==bst_693.mfbanr'"
     },
 
     'bst_692': {
@@ -116,9 +116,8 @@ relationships = {
         'vraag_functie_attribuut': "'bst_697'",
     },
 
-    # TODO: investigate uselist
     'bst_693': {
-        'teksten': "'bst_921', uselist=True, primaryjoin='and_(bst_921.txkode==bst_693.mfbanr, bst_921.txmodu==bst_693.txmodu, bst_921.txtsrt==%s)'" % ZIEKENHUISTEKST,
+        'teksten': ['bst_693.mfbanr==bst_921.txkode, bst_693.txmodu==bst_921.txmodu, %s==bst_921.txtsrt' % ZIEKENHUISTEKST],
         'bouwstenen': '"bst_694"'
     },
 

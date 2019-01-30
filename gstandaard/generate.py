@@ -148,7 +148,6 @@ def create_class(file_no):
                     _, lt, _, _, rt, rc = entry2x(entry)
                     desc = "'%s'" % rt
 
-                    # todo: always set uselist?
                     if uselist:
                         desc += ', uselist=True'
 

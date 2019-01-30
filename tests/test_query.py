@@ -1,9 +1,7 @@
-from model import bst_685, bst_690, bst_691, bst_695
-from wes import group_dict
-from db import session
-
-
-from traversal import trav_prot
+from .model import bst_685, bst_690, bst_691, bst_695
+from .wes import group_dict
+from .db import session
+from .traversal import trav_prot
 
 all_fg_protocols = session.query(bst_690).\
             join(bst_691, bst_690.mfbpnr==bst_691.mfbpnr).\

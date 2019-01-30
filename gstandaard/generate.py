@@ -112,71 +112,82 @@ def create_class(file_no):
         code += '\n'
         for rel in relationships[table_name]:
             entry = relationships[table_name][rel]
-            # print('Entry:', entry)
 
+            # We use square brackets to denote that the member should be a list
             if not isinstance(entry, str):
-                uselist = True
                 assert len(entry) == 1
+                uselist = True
                 entry = entry[0]
             else:
                 uselist = False
 
+            def entry2x(entry):
+                local, remote = entry.split('==')
+
+                if '.' in local:
+                    local_table, local_column = local.split('.')
+                else:
+                    local_table, local_column = None, None
+
+                if '.' in remote:
+                    remote_table, remote_column = remote.split('.')
+                else:
+                    remote_table, remote_column = None, None
+
+                return local, local_table, local_column, remote, remote_table, remote_column
+
+            # Check the number of entries
             if ',' not in entry:
-                # scalar entry
+                # single entry
 
                 if '==' not in entry:
                     # simple relationship
                     desc = entry
                 else:
                     # complex relationship
-                    local, remote = entry.split('==')
+                    _, lt, _, _, rt, rc = entry2x(entry)
+                    desc = "'%s'" % rt
 
-                    local_table, local_column = local.split('.')
-                    remote_table, remote_column = remote.split('.')
+                    # todo: always set uselist?
+                    if uselist:
+                        desc += ', uselist=True'
 
-                    if local_table == remote_table:
-                        # Self referencing
-                        pass
-                    else:
-                        # non-self reference
-                        # example: 'nee_actie': "'bst_693', primaryjoin='bst_691.mfbpna==bst_693.mfbanr'"
-                        desc = "'%s', primaryjoin=%s==%s" % (remote_table, local, remote)
+                    if lt == rt:
+                        desc += ', remote_side=[%s]' % rc
+                    desc += ", primaryjoin=%s" % entry
 
             else:
                 # Multiple entries
-                # example: 'ja_flow': "'bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)'",
-                #           ja_flow = relationship('bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin=and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr))
                 remote_columns = []
                 remote_tables = []
+                local_tables = []
+
                 entries = [x.strip() for x in entry.split(',')]
+
                 for one in entries:
-                    # print('One:', one)
-                    local, remote = one.split('==')
+                    local, lt, _, remote, rt, rc = entry2x(one)
 
-                    if '.' in local:
-                        local_table, local_column = local.split('.')
-                    else:
-                        local_table, local_column = None, None
+                    if rc:
+                        remote_columns.append(rc)
+                    if rt:
+                        remote_tables.append(rt)
+                    if lt:
+                        local_tables.append(lt)
 
-                    remote_table, remote_column = remote.split('.')
-                    remote_columns.append(remote_column)
-                    remote_tables.append(remote_table)
+                assert len(set(local_tables)) == 1
+                assert len(set(remote_tables)) == 1
 
-                primary = 'and_(%s)' % ', '.join(entries)
+                desc = "'%s'" % remote_tables[0]
 
-                # print('primary:', primary)
-
-                desc = "'%s'" % remote_table
-                # todo: always set uselist?
                 if uselist:
                     desc += ', uselist=True'
-                if local_table == remote_table:
-                    assert len(set(remote_tables)) == 1
+
+                desc += ", primaryjoin='%s'" % 'and_(%s)' % ', '.join(entries)
+
+                if local_tables[0] == remote_tables[0]:
                     desc += ', remote_side=[%s]' % ', '.join(remote_columns)
-                desc += ", primaryjoin='%s'" % primary
 
-
-
+            # End of relationship construction
             code += '    %s = relationship(%s)\n' % (rel, desc)
 
     if table_name in aggregates:

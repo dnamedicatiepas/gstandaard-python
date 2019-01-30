@@ -130,8 +130,8 @@ class bst_691(Base):
         return "<MFB: Protocol flow(%d)[mutkod=%s, mfbpjk=%s, mfbpja=%s, mfbpnk=%s, mfbpna=%s, mfbvnr=%s, mfbpnr=%s, mfbpnrv=%s, mfbknr=%s]>" % (self.bstnum, self.mutkod, self.mfbpjk, self.mfbpja, self.mfbpnk, self.mfbpna, self.mfbvnr, self.mfbpnr, self.mfbpnrv, self.mfbknr)
 
     vraag = relationship("bst_692")
-    ja_flow = relationship('bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpjk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)')
-    nee_flow = relationship('bst_691', remote_side=[mfbknr, mfbpnr], primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)')
+    ja_flow = relationship('bst_691', primaryjoin='and_(bst_691.mfbpjk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)', remote_side=[mfbknr, mfbpnr])
+    nee_flow = relationship('bst_691', primaryjoin='and_(bst_691.mfbpnk==bst_691.mfbknr, bst_691.mfbpnr==bst_691.mfbpnr)', remote_side=[mfbknr, mfbpnr])
     ja_actie = relationship('bst_693', primaryjoin='bst_691.mfbpja==bst_693.mfbanr')
     nee_actie = relationship('bst_693', primaryjoin='bst_691.mfbpna==bst_693.mfbanr')
 

@@ -1,7 +1,7 @@
 # TODO: Bepaal mbv bestand 682 welke interacties, contra-indicaties, dubbelmedicaties, leeftijd als CI 
 # (op basis van thes.17) en meldingen van bijzondere kenmerken niet meer hoeven te worden uitgevoerd.
 
-from constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD
+from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD
 
 def aanwezigheid_parameter_waardelijst(naald, hooiberg):
     if naald in hooiberg:

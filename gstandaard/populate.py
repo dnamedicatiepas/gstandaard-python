@@ -1,9 +1,9 @@
 import struct
-from parsing import get_bestand_html, get_inputpath, extract_struct
-from db import session
-from constants import SKIP_FIELDS
-from files import file_numbers
-from utils import load_class
+from .parsing import get_bestand_html, get_inputpath, extract_struct
+from .db import session
+from .constants import SKIP_FIELDS
+from .files import file_numbers
+from .utils import load_class
 
 priority_files = ['902']
 

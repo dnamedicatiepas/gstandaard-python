@@ -1,2 +1,7 @@
 .idea/
+.tox
 gstandaard/__pycache__/
+tests/__pycache__/
+gstandaard.egg-info/
+build/
+dist/

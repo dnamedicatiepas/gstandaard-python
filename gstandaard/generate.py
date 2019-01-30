@@ -224,18 +224,18 @@ def create_class(file_no):
 def main():
 
     all_code = '''\
-    #
-    # !!!! this file is auto-generated !!!
-    #
+#
+# !!!! this file is auto-generated !!!
+#
 
-    from sqlalchemy import Column, Integer, String, ForeignKey, ForeignKeyConstraint
-    from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.ext.hybrid import hybrid_property
-    from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy import Column, Integer, String, ForeignKey, ForeignKeyConstraint
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.ext.associationproxy import association_proxy
 
-    Base = declarative_base()
-    '''
+Base = declarative_base()
+'''
 
     for file_no in file_numbers:
         all_code += create_class(file_no)

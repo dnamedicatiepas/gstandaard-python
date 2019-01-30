@@ -1,4 +1,4 @@
-from constants import ZIEKENHUISTEKST
+from .constants import ZIEKENHUISTEKST
 
 foreign_keys = {
     'bst_685': [

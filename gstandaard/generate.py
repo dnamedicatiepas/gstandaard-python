@@ -1,7 +1,7 @@
-from parsing import get_bestand_html, extract_struct
-from files import file_numbers
-from definition import foreign_keys, proxies, aggregates, relationships
-from constants import SKIP_FIELDS
+from .parsing import get_bestand_html, extract_struct
+from .files import file_numbers
+from .definition import foreign_keys, proxies, aggregates, relationships
+from .constants import SKIP_FIELDS
 
 
 def get_non_composite_key(table_name, name, debug=False):

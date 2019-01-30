@@ -2,10 +2,10 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-from files import file_numbers
-from constants import SKIP_FIELDS, BESCHRIJVINGEN_FILE_EXTENSION
+from .files import file_numbers
+from .constants import SKIP_FIELDS, BESCHRIJVINGEN_FILE_EXTENSION
 
-from config import BESCHRIJVINGEN_DIRECTORY, BESTAND_BESCHRIJVINGEN_URL_PREFIX, DATA_DIRECTORY
+from .config import BESCHRIJVINGEN_DIRECTORY, BESTAND_BESCHRIJVINGEN_URL_PREFIX, DATA_DIRECTORY
 
 
 def get_bestand_filename(name, add_ext=False):

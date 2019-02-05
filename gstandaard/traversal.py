@@ -41,8 +41,9 @@ def get_protocols(session, fg_only=False):
 def trav_actie(actie, debug=False):
     
     # TODO: moet er nog iets met 694/bouwsteen/vervolg actie gebeuren?
-    assert len(actie.bouwstenen) == 0, 'Not implemented'
-    
+    if len(actie.bouwstenen) > 0:
+        raise NotImplementedError('No follow-up action/bouwstenen functionality implemented')
+
     if actie.mfbajn == 'J':
         desc = '\n'.join(actie.tekst)
         if debug:
@@ -78,10 +79,12 @@ def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
                         
     # We don't have code to deal with protocol attributes
     # (Geen eerder berekend resultaat gebruiken.)
-    assert vraag.mfbfuwo == 0, 'Protocol attribuut ophalen: %s' % vraag.mfbfuwo
+    if vraag.mfbfuwo > 0:
+        raise NotImplementedError('No code for dealing with protocol attributes (%d)' % vraag.mfbfuwo)
     
     # Validate that questions have a function (we ignored attributed above ...)
-    assert vraag.mfbfunnr > 0, 'Geen functie gedefinieerd'
+    if vraag.mfbfunnr == 0:
+        raise ValueError('No function defined')
     
     if debug:
         print('Functie omschrijving: %s' % vraag.functie.mfbfuoms)
@@ -91,7 +94,8 @@ def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
         raise RuntimeWarning('Function not implemented "%d:%s"' % (vraag.mfbfunnr, vraag.functie.mfbfuoms))
 
     # "Door MFBFUNS1 kunnen meerdere parameters aan een functie (bij een specifieke vraag) gekoppeld worden."
-    assert len(vraag.parameters) == 1, 'Dont know how to handle more or less'
+    if len(vraag.parameters) != 1:
+        raise ValueError('Dont know how to handle %d parameters' % len(vraag.parameters))
     parameter = vraag.parameters[0]
     if debug:
         print('Parameter:', parameter.mfbpanr, parameter.mfbpaoms)
@@ -99,22 +103,26 @@ def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
         
     # "Door MFBFUNS2 kunnen meerdere waardenlijsten aan een functie (bij een specifieke vraag) gekoppeld worden."
     # Vooralsnog altijd leeg in onze data
-    assert len(vraag.waardelijsten) == 0, "Not implemented"
+    if len(vraag.waardelijsten) > 0:
+        raise NotImplementedError("Waardelijsten not implemented")
    
     # "Door MFBFUNS3 kunnen meerdere attributen aan een functie (bij een specifieke vraag) gekoppeld worden."
     # Kunnen er potentieel meer zijn
-    assert len(vraag.attributen) == 1, 'Dont know how to handle more or less'
+    if len(vraag.attributen) != 1:
+        raise ValueError('Dont know how to handle %d attributes' % len(vraag.attributen))
     attribuut = vraag.attributen[0]
     if debug:
         print('Attribuut %d, %s:' % (attribuut.mfbatnr, attribuut.mfbatoms))
         print('Attribuut type: %s (%s)' % (attribuut.mfbattyp, 'GETAL' if attribuut.mfbattyp == ATTRIBUUT_GETAL else 'BOOLEAN'))
 
     # We don't have code to deal with protocol attributes
-    assert vraag.vraag_functie_attribuut[0].mfbfuwt == 0, 'Protocol attribuut wegschrijven: %s' % vraag.vraag_functie_attribuut[0].mfbfuwt
-    
+    if vraag.vraag_functie_attribuut[0].mfbfuwt > 0:
+        raise NotImplementedError('No code for dealing with protocol attributes (%d)' % vraag.vraag_functie_attribuut[0].mfbfuwt)
+
     # Currently we only have one attribute function implemented
-    assert attribuut.mfbatnr in [4], "Geen implementatie voor %d, %s" % (attribuut.mfbatnr, attribuut.mfbatoms)
-    
+    if attribuut.mfbatnr not in [4]:
+        raise NotImplementedError("No implementation for attribuut function: %d, %s" % (attribuut.mfbatnr, attribuut.mfbatoms))
+
     IVwaarde = attribuut_functies[attribuut.mfbatnr](parameter.mfbpanr, sample_params)   
     if debug:
         print('IVwaarde: %d' % IVwaarde)

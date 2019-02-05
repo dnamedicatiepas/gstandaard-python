@@ -1,8 +1,8 @@
 # TODO: Bepaal mbv bestand 682 welke interacties, contra-indicaties, dubbelmedicaties, leeftijd als CI 
 # (op basis van thes.17) en meldingen van bijzondere kenmerken niet meer hoeven te worden uitgevoerd.
 
-from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD
-from .model import bst_685, bst_690, bst_691, bst_695
+from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD, THAKD4_F, TSNR_CI
+from .model import bst_685, bst_690, bst_691, bst_692, bst_695
 
 def aanwezigheid_parameter_waardelijst(naald, hooiberg):
     if naald in hooiberg:
@@ -27,13 +27,11 @@ def tsitnr2mfbpanrs(session, tsitnr):
 
 
 def get_protocols(session, fg_only=False):
-    protocols = session.query(bst_690). \
-        join(bst_691, bst_690.mfbpnr==bst_691.mfbpnr). \
-        join(bst_695, bst_691.mfbvnr==bst_695.mfbvnr). \
-        join(bst_685, bst_695.mfbpanr==bst_685.mfbpanr)
+    # Protocols -> Flow -> Vraag -> Vraag_Functie_Parameter -> Parameter
+    protocols = session.query(bst_690).join(bst_691).join(bst_692).join(bst_695).join(bst_685)
 
     if fg_only:
-        return protocols.filter(bst_685.mfbpaoms.like('FG:%')).all()
+        return protocols.filter(bst_685.thesaurus.has(tsnr=TSNR_CI, thakd4=THAKD4_F)).all()
 
     return protocols.all()
 

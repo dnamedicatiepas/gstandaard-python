@@ -89,7 +89,7 @@ def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
     
     # We can only deal with "Zoek naar een bepaalde CI-aard bij de patient"?!
     if vraag.mfbfunnr != FUNCTIE_CI_AARD:
-        raise RuntimeWarning('Function not implemented "%d:%s"' % (vraag.mfbfunnr, vraag.functie.mfbfuoms))
+        raise NotImplementedError('Function not implemented "%d:%s"' % (vraag.mfbfunnr, vraag.functie.mfbfuoms))
 
     # "Door MFBFUNS1 kunnen meerdere parameters aan een functie (bij een specifieke vraag) gekoppeld worden."
     if len(vraag.parameters) != 1:

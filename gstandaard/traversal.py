@@ -69,10 +69,8 @@ def trav_prot(flow, sample_params, score_teller, doorlopen_pad, debug=False):
         print('Functie omschrijving: %s' % vraag.functie.mfbfuoms)
     
     # We can only deal with "Zoek naar een bepaalde CI-aard bij de patient"?!
-    if vraag.mfbfunnr != FUNCTIE_CI_AARD:
-        print('WARNING, non-FUNCTIE_CI_AARD function "%d:%s"' % (
-            vraag.mfbfunnr, vraag.functie.mfbfuoms))
-    
+    assert vraag.mfbfunnr == FUNCTIE_CI_AARD, 'WARNING, non-FUNCTIE_CI_AARD function "%d:%s"' % (vraag.mfbfunnr, vraag.functie.mfbfuoms)
+
     # "Door MFBFUNS1 kunnen meerdere parameters aan een functie (bij een specifieke vraag) gekoppeld worden."
     assert len(vraag.parameters) == 1, 'Dont know how to handle more or less'
     parameter = vraag.parameters[0]

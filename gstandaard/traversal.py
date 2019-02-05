@@ -2,6 +2,7 @@
 # (op basis van thes.17) en meldingen van bijzondere kenmerken niet meer hoeven te worden uitgevoerd.
 
 from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD
+from .model import bst_685
 
 def aanwezigheid_parameter_waardelijst(naald, hooiberg):
     if naald in hooiberg:
@@ -18,6 +19,11 @@ operators = {
     '=': (lambda x, y: x == y)
 }
 # operators['='](True, True)
+
+
+def tsitnr2mfbpanrs(session, tsitnr):
+    result = session.query(bst_685).filter_by(mfbpitnr=tsitnr).all()
+    return [x.mfbpanr for x in result]
 
 
 def trav_actie(actie, debug=False):

@@ -55,7 +55,7 @@ def trav_actie(actie, debug=False):
         return False
 
 
-def trav_prot(flow, sample_params, score_teller, doorlopen_pad, debug=False):
+def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
     
     # Vragen zijn onderdeel van een knooppunt in het protocol (zie bst 691).
     # Het antwoord op de vraag (ja of nee) bepaalt het vervolgknooppunt binnen het protocol.
@@ -123,21 +123,23 @@ def trav_prot(flow, sample_params, score_teller, doorlopen_pad, debug=False):
         print("Operator result:", op_result)
     
     if op_result:
-        score_teller += vraag.mfbvstj
+        if vraag.mfbvstj > 0:
+            raise NotImplementedError('"Scoreteller" functionality is not implemented')
         doorlopen_pad.append(vraag.mfbvstjt)
 
         if flow.mfbpjk:
-            trav_prot(flow.ja_flow, sample_params, score_teller, doorlopen_pad, debug)
+            trav_prot(flow.ja_flow, sample_params, doorlopen_pad, debug)
         else:
             if debug:
                 print('JA Actie: %s' % flow.mfbpja)
             return trav_actie(flow.ja_actie, debug)
     else:
-        score_teller += vraag.mfbvstn
+        if vraag.mfbvstn > 0:
+            raise NotImplementedError('Scoreteller is not implemented')
         doorlopen_pad.append(vraag.mfbvstnt)
 
         if flow.mfbpnk:
-            trav_prot(flow.nee_flow, sample_params, score_teller, doorlopen_pad, debug)
+            trav_prot(flow.nee_flow, sample_params, doorlopen_pad, debug)
         else:
             if debug:
                 print('NEE Actie: %s' % flow.mfbpna)

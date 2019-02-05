@@ -2,7 +2,7 @@
 # (op basis van thes.17) en meldingen van bijzondere kenmerken niet meer hoeven te worden uitgevoerd.
 
 from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD
-from .model import bst_685
+from .model import bst_685, bst_690, bst_691, bst_695
 
 def aanwezigheid_parameter_waardelijst(naald, hooiberg):
     if naald in hooiberg:
@@ -24,6 +24,18 @@ operators = {
 def tsitnr2mfbpanrs(session, tsitnr):
     result = session.query(bst_685).filter_by(mfbpitnr=tsitnr).all()
     return [x.mfbpanr for x in result]
+
+
+def get_protocols(session, fg_only=False):
+    protocols = session.query(bst_690). \
+        join(bst_691, bst_690.mfbpnr==bst_691.mfbpnr). \
+        join(bst_695, bst_691.mfbvnr==bst_695.mfbvnr). \
+        join(bst_685, bst_695.mfbpanr==bst_685.mfbpanr)
+
+    if fg_only:
+        return protocols.filter(bst_685.mfbpaoms.like('FG:%')).all()
+
+    return protocols.all()
 
 
 def trav_actie(actie, debug=False):

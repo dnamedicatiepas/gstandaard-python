@@ -3,17 +3,6 @@ from gstandaard.wes import group_dict
 from gstandaard.db import session
 from gstandaard.traversal import trav_prot, tsitnr2mfbpanrs
 
-all_fg_protocols = session.query(bst_690).\
-            join(bst_691, bst_690.mfbpnr==bst_691.mfbpnr).\
-            join(bst_695, bst_691.mfbvnr==bst_695.mfbvnr).\
-            join(bst_685, bst_695.mfbpanr==bst_685.mfbpanr).\
-            filter(bst_685.mfbpaoms.like('FG:%')).all()
-print(len(all_fg_protocols))
-print(len(set(all_fg_protocols)))
-
-
-
-
 
 results = {}
 answers = {}

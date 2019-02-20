@@ -50,12 +50,12 @@ def trav_actie(actie, debug=False):
         desc = '\n'.join(actie.tekst)
         if debug:
             print('DESC:', desc)
-        return True
+        return desc
     
     else:
         if debug:
             print('Geen actie:', actie.mfbaoms)
-        return False
+        return None
 
 
 def trav_prot(flow, sample_params, doorlopen_pad, debug=False):

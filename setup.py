@@ -21,6 +21,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': [
             'generate-model=gstandaard.generate:main',
+            'populate-db=gstandaard.populate:main',
         ],
     },
 )

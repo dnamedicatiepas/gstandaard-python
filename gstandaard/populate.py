@@ -57,7 +57,7 @@ def populate_db():
 
             column_tups.append((name, kind))
 
-        table_class = load_class('model.' + table_name)
+        table_class = load_class('gstandaard.model.' + table_name)
         table_instance = table_class
 
         columns = [x[0] for x in column_tups]
@@ -69,5 +69,8 @@ def populate_db():
 
         session.commit()
 
+def main():
+    populate_db()
 
-populate_db()
+if __name__ == '__main__':
+    main()

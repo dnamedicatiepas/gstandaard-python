@@ -176,13 +176,13 @@ class bst_693(Base):
     mfbajn = Column(String(1))
     mfbmon = Column(String(1))
     thmodu = Column(Integer)
-    txmodu = Column(Integer, ForeignKey("bst_921.txmodu"))
+    txmodu = Column(Integer, ForeignKey("bst_922.txmodu"))
     mfbanr = Column(Integer, primary_key=True)
 
     def __repr__(self):
         return "<MFB: Actie(%d)[mutkod=%s, mfbaoms=%s, mfbajn=%s, mfbmon=%s, thmodu=%s, txmodu=%s, mfbanr=%s]>" % (self.bstnum, self.mutkod, self.mfbaoms, self.mfbajn, self.mfbmon, self.thmodu, self.txmodu, self.mfbanr)
 
-    teksten = relationship('bst_921', uselist=True, primaryjoin='and_(bst_693.mfbanr==bst_921.txkode, bst_693.txmodu==bst_921.txmodu, 240==bst_921.txtsrt)')
+    teksten = relationship('bst_922', uselist=True, primaryjoin='and_(bst_693.mfbanr==bst_922.txkode, bst_693.txmodu==bst_922.txmodu, 240==bst_922.txtsrt)')
     bouwstenen = relationship("bst_694")
 
     @hybrid_property
@@ -320,4 +320,23 @@ class bst_921(Base):
 
     def __repr__(self):
         return "<Tekstblokken ASCII (vervangt 920)(%d)[mutkod=%s, thmodu=%s, thtsrt=%s, txtext=%s, txmodu=%s, txtsrt=%s, txkode=%s, txblnr=%s, txrgln=%s]>" % (self.bstnum, self.mutkod, self.thmodu, self.thtsrt, self.txtext, self.txmodu, self.txtsrt, self.txkode, self.txblnr, self.txrgln)
+
+
+class bst_922(Base):
+    """Title: Bestandsbeschrijvingen: Bestand 922 Tekstblokken HTML (vervangt 920)"""
+    __tablename__ = "bst_922"
+
+    bstnum = Column(Integer)
+    mutkod = Column(Integer)
+    thmodu = Column(Integer)
+    thtsrt = Column(Integer)
+    txtext = Column(String(132))
+    txmodu = Column(Integer, primary_key=True)
+    txtsrt = Column(Integer, primary_key=True)
+    txkode = Column(Integer, primary_key=True)
+    txblnr = Column(Integer, primary_key=True)
+    txrgln = Column(Integer, primary_key=True)
+
+    def __repr__(self):
+        return "<Tekstblokken HTML (vervangt 920)(%d)[mutkod=%s, thmodu=%s, thtsrt=%s, txtext=%s, txmodu=%s, txtsrt=%s, txkode=%s, txblnr=%s, txrgln=%s]>" % (self.bstnum, self.mutkod, self.thmodu, self.thtsrt, self.txtext, self.txmodu, self.txtsrt, self.txkode, self.txblnr, self.txrgln)
 

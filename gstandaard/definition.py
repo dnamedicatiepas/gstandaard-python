@@ -42,7 +42,7 @@ foreign_keys = {
 
     'bst_693': [
         {
-            'txmodu': 'bst_921.txmodu'
+            'txmodu': 'bst_922.txmodu'
         }
     ],
 
@@ -117,7 +117,7 @@ relationships = {
     },
 
     'bst_693': {
-        'teksten': ['bst_693.mfbanr==bst_921.txkode, bst_693.txmodu==bst_921.txmodu, %s==bst_921.txtsrt' % ZIEKENHUISTEKST],
+        'teksten': ['bst_693.mfbanr==bst_922.txkode, bst_693.txmodu==bst_922.txmodu, %s==bst_922.txtsrt' % ZIEKENHUISTEKST],
         'bouwstenen': '"bst_694"'
     },
 

@@ -24,6 +24,6 @@ file_numbers = {
     '902': {}, # Thesauri totaal
 #     '911': {}, # Header relatie bestand
 #     '912': {}, # Relatie bestand
-    '921': {}, # Tekstblokken ASCII
-#     '922': {}, # Tekstblokken HTML
+#     '921': {}, # Tekstblokken ASCII
+    '922': {}, # Tekstblokken HTML
 }

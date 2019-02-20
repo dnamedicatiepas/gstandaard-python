@@ -36,6 +36,10 @@ def get_protocols(session, fg_only=False):
     return protocols.all()
 
 
+def get_fg_parameters(session):
+    return [x.mfbpanr for x in session.query(bst_685).filter(bst_685.thesaurus.has(tsnr=TSNR_CI, thakd4=THAKD4_F)).all()]
+
+
 def trav_actie(actie, debug=False):
     
     # TODO: moet er nog iets met 694/bouwsteen/vervolg actie gebeuren?

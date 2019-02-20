@@ -13,3 +13,7 @@ def load_class(full_class_string):
     module = importlib.import_module(module_path)
     # Finally, we retrieve the Class
     return getattr(module, class_str)
+
+
+def poms2med(poms):
+    return poms.strip().split(':')[1]

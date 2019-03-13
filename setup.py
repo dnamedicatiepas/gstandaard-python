@@ -22,6 +22,7 @@ setuptools.setup(
         'console_scripts': [
             'generate-model=gstandaard.generate:main',
             'populate-db=gstandaard.populate:main',
+            'download-htmls=gstandaard.parsing:download_htmls'
         ],
     },
 )

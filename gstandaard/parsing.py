@@ -42,9 +42,15 @@ def download_if_not_exists(filename, url):
     return False
 
 
-def refresh_htmls():
+import click
+@click.command()
+@click.option('--refresh', is_flag=True, default=False, help='Download files even if they exist already.')
+def download_htmls(refresh):
     for file_no in file_numbers:
-        download_if_not_exists(get_htmlpath(file_no), get_bestand_url(file_no))
+        if refresh:
+            download_file(get_bestand_htmlpath(file_no), get_bestand_url(file_no))
+        else:
+            download_if_not_exists(get_bestand_htmlpath(file_no), get_bestand_url(file_no))
 
 
 def get_bestand_html(file_no):

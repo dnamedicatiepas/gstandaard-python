@@ -1,5 +1,5 @@
 # Database
-database = 'foo.db'
+database = '/Users/mark/proj/pongs/gstandaard.db'
 # database = ':memory:'
 
 

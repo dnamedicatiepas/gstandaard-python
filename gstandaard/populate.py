@@ -1,9 +1,10 @@
 import struct
 from .parsing import get_bestand_html, get_inputpath, extract_struct
-from .db import session
+from .db import create_session
 from .constants import SKIP_FIELDS
 from .files import file_numbers
 from .utils import load_class
+import argparse
 
 priority_files = ['902']
 
@@ -18,12 +19,15 @@ def priosort(l, prio):
     return sorted(l, key=lambda x: prio_index(x))
 
 
-def populate_db():
+def populate_db(data_directory, beschrijvingen_directory, database):
+
+    session = create_session(database)
+
     for file_no in priosort(file_numbers, priority_files):
 
-        print('Parsing file %s ...' % get_inputpath(file_no))
+        print('Parsing file %s ...' % get_inputpath(data_directory, file_no))
 
-        html = get_bestand_html(file_no)
+        html = get_bestand_html(beschrijvingen_directory, file_no)
         fields = extract_struct(html.body.find('table', attrs={'class': 'zindextable'}))
 
         fieldwidths = [x['size'] for x in fields]
@@ -33,7 +37,7 @@ def populate_db():
         parse = lambda line: tuple(s.decode() for s in fieldstruct.unpack_from(line.encode()))
 
         data = []
-        with open(get_inputpath(file_no), "r") as infile:
+        with open(get_inputpath(data_directory, file_no), "r") as infile:
             for line in infile:
                 # 0x1a / substitute character / eof
                 if len(line) == 1:
@@ -69,8 +73,18 @@ def populate_db():
 
         session.commit()
 
+
 def main():
-    populate_db()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-d", "--data-directory", required=True,
+                    help="Directory with g-standaard data files")
+    ap.add_argument("-b", "--beschrijvingen-directory", required=True,
+                    help="Directory with HTML beschrijvingen files")
+    ap.add_argument("-s", "--sqlite-database", required=True,
+                    help="File name of to be created SQLite database")
+    args = vars(ap.parse_args())
+    populate_db(args['data_directory'], args['beschrijvingen_directory'], args['sqlite_database'])
+
 
 if __name__ == '__main__':
     main()

@@ -5,3 +5,4 @@ tests/__pycache__/
 gstandaard.egg-info/
 build/
 dist/
+venv/

@@ -1,8 +1,11 @@
 # TODO: Bepaal mbv bestand 682 welke interacties, contra-indicaties, dubbelmedicaties, leeftijd als CI 
 # (op basis van thes.17) en meldingen van bijzondere kenmerken niet meer hoeven te worden uitgevoerd.
 
+# TODO: is THAKD2 = X / BST655 nog iets om naar te kijken?
+
 from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD, THAKD4_F, TSNR_CI
 from .model import bst_685, bst_690, bst_691, bst_692, bst_695
+
 
 def aanwezigheid_parameter_waardelijst(naald, hooiberg):
     if naald in hooiberg:

@@ -1,5 +1,6 @@
 import importlib
 
+
 def load_class(full_class_string):
     """
     dynamically load a class from a string

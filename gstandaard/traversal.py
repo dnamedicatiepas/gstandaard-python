@@ -4,7 +4,7 @@
 # TODO: is THAKD2 = X / BST655 nog iets om naar te kijken?
 
 from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD, THAKD4_F, TSNR_CI
-from .model import bst_685, bst_690, bst_691, bst_692, bst_695
+from .model import bst_685, bst_690, bst_691, bst_692, bst_695, bst_902
 
 
 def aanwezigheid_parameter_waardelijst(naald, hooiberg):
@@ -41,6 +41,10 @@ def get_protocols(session, fg_only=False):
 
 def get_fg_parameters(session):
     return [x.mfbpanr for x in session.query(bst_685).filter(bst_685.thesaurus.has(tsnr=TSNR_CI, thakd4=THAKD4_F)).all()]
+
+
+def tsitnr2phenotype(session, tsitnr):
+    return session.query(bst_902).filter_by(tsitnr=tsitnr, tsnr=TSNR_CI, thakd4=THAKD4_F).one().thnm50
 
 
 def trav_actie(actie, debug=False):

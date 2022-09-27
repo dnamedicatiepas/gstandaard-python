@@ -1,3 +1,4 @@
+import argparse
 from .parsing import get_bestand_html, extract_struct
 from .files import file_numbers
 from .definition import foreign_keys, proxies, aggregates, relationships
@@ -222,6 +223,10 @@ def create_class(html_dir, file_no):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-b", "--beschrijvingen-directory", required=True,
+                    help="Directory with HTML beschrijvingen files")
+    args = vars(ap.parse_args())
 
     all_code = '''\
 #
@@ -238,7 +243,7 @@ Base = declarative_base()
 '''
 
     for file_no in file_numbers:
-        all_code += create_class(file_no)
+        all_code += create_class(args["beschrijvingen_directory"], file_no)
 
     print(all_code)
 

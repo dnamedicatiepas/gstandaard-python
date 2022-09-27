@@ -303,25 +303,6 @@ class bst_902(Base):
         return "<Thesauri totaal(%d)[mutkod=%s, thitmk=%s, thnm4=%s, thnm15=%s, thnm25=%s, thnm50=%s, thakd1=%s, thakd2=%s, thakd3=%s, thakd4=%s, thakd5=%s, thakd6=%s, tsnr=%s, tsitnr=%s]>" % (self.bstnum, self.mutkod, self.thitmk, self.thnm4, self.thnm15, self.thnm25, self.thnm50, self.thakd1, self.thakd2, self.thakd3, self.thakd4, self.thakd5, self.thakd6, self.tsnr, self.tsitnr)
 
 
-class bst_921(Base):
-    """Title: Bestandsbeschrijvingen: Bestand 921 Tekstblokken ASCII (vervangt 920)"""
-    __tablename__ = "bst_921"
-
-    bstnum = Column(Integer)
-    mutkod = Column(Integer)
-    thmodu = Column(Integer)
-    thtsrt = Column(Integer)
-    txtext = Column(String(132))
-    txmodu = Column(Integer, primary_key=True)
-    txtsrt = Column(Integer, primary_key=True)
-    txkode = Column(Integer, primary_key=True)
-    txblnr = Column(Integer, primary_key=True)
-    txrgln = Column(Integer, primary_key=True)
-
-    def __repr__(self):
-        return "<Tekstblokken ASCII (vervangt 920)(%d)[mutkod=%s, thmodu=%s, thtsrt=%s, txtext=%s, txmodu=%s, txtsrt=%s, txkode=%s, txblnr=%s, txrgln=%s]>" % (self.bstnum, self.mutkod, self.thmodu, self.thtsrt, self.txtext, self.txmodu, self.txtsrt, self.txkode, self.txblnr, self.txrgln)
-
-
 class bst_922(Base):
     """Title: Bestandsbeschrijvingen: Bestand 922 Tekstblokken HTML (vervangt 920)"""
     __tablename__ = "bst_922"

@@ -48,7 +48,7 @@ def get_target_name(table_name, name):
     return None
 
 
-def create_class(file_no):
+def create_class(html_dir, file_no):
 
     code = ''
 
@@ -57,7 +57,7 @@ def create_class(file_no):
 
     code += '\n\nclass %s(Base):\n' % class_name
 
-    html = get_bestand_html(file_no)
+    html = get_bestand_html(html_dir, file_no)
     fields = extract_struct(html.body.find('table', attrs={'class': 'zindextable'}))
 
     title = html.body.find('h1', attrs={'class': 'documentFirstHeading'}).string

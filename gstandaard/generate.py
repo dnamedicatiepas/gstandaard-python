@@ -188,6 +188,7 @@ def create_class(html_dir, file_no):
                     desc += ', remote_side=[%s]' % ', '.join(remote_columns)
 
             # End of relationship construction
+            # TODO: https://sqlalche.me/e/14/qzyx
             code += '    %s = relationship(%s)\n' % (rel, desc)
 
     if table_name in aggregates:

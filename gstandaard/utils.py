@@ -17,4 +17,4 @@ def load_class(full_class_string):
 
 
 def poms2med(poms):
-    return poms.strip().split(':')[1]
+    return poms.split(':')[1].strip()

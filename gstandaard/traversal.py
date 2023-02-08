@@ -54,7 +54,7 @@ def trav_actie(actie, debug=False):
         raise NotImplementedError('No follow-up action/bouwstenen functionality implemented')
 
     if actie.mfbajn == 'J':
-        desc = '\n'.join(actie.tekst)
+        desc = ' '.join([t.strip() for t in actie.tekst])
         if debug:
             print('DESC:', desc)
         return desc
@@ -143,7 +143,7 @@ def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
     if op_result:
         if vraag.mfbvstj > 0:
             raise NotImplementedError('"Scoreteller" functionality is not implemented')
-        doorlopen_pad.append(vraag.mfbvstjt)
+        doorlopen_pad.append(vraag.mfbvstjt.strip())
 
         if flow.mfbpjk:
             trav_prot(flow.ja_flow, sample_params, doorlopen_pad, debug)
@@ -154,7 +154,7 @@ def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
     else:
         if vraag.mfbvstn > 0:
             raise NotImplementedError('Scoreteller is not implemented')
-        doorlopen_pad.append(vraag.mfbvstnt)
+        doorlopen_pad.append(vraag.mfbvstnt.strip())
 
         if flow.mfbpnk:
             trav_prot(flow.nee_flow, sample_params, doorlopen_pad, debug)

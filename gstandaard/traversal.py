@@ -5,6 +5,7 @@
 
 from .constants import ATTRIBUUT_GETAL, FUNCTIE_CI_AARD, THAKD4_F, TSNR_CI
 from .model import bst_685, bst_690, bst_691, bst_692, bst_695, bst_902
+import sqlalchemy
 
 
 def aanwezigheid_parameter_waardelijst(naald, hooiberg):
@@ -44,8 +45,10 @@ def get_fg_parameters(session):
 
 
 def tsitnr2phenotype(session, tsitnr):
-    return session.query(bst_902).filter_by(tsitnr=tsitnr, tsnr=TSNR_CI, thakd4=THAKD4_F).one().thnm50
-
+    try:
+        return session.query(bst_902).filter_by(tsitnr=tsitnr, tsnr=TSNR_CI, thakd4=THAKD4_F).one().thnm50
+    except sqlalchemy.exc.NoResultFound:
+        return None
 
 def trav_actie(actie, debug=False):
     
@@ -108,7 +111,7 @@ def trav_prot(flow, sample_params, doorlopen_pad, debug=False):
     parameter = vraag.parameters[0]
     if debug:
         print('Parameter:', parameter.mfbpanr, parameter.mfbpaoms)
-        print('Sample parameters: %s' % sample_params)
+        # print('Sample parameters: %s' % sample_params)
         
     # "Door MFBFUNS2 kunnen meerdere waardenlijsten aan een functie (bij een specifieke vraag) gekoppeld worden."
     # Vooralsnog altijd leeg in onze data

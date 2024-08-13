@@ -6,24 +6,12 @@ from .files import file_numbers
 from .utils import load_class
 import argparse
 
-priority_files = ['902']
-
-
-def priosort(l, prio):
-    def prio_index(x):
-        try:
-            return prio.index(x)
-        except ValueError:
-            return len(prio)
-
-    return sorted(l, key=lambda x: prio_index(x))
-
 
 def populate_db(data_directory, beschrijvingen_directory, database):
 
     session = create_session(database)
 
-    for file_no in priosort(file_numbers, priority_files):
+    for file_no in file_numbers:
 
         print('Parsing file %s ...' % get_inputpath(data_directory, file_no))
 

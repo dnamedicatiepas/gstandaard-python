@@ -304,7 +304,7 @@ class bst_902(Base):
 
 
 class bst_922(Base):
-    """Title: Bestandsbeschrijvingen: Bestand 922 Tekstblokken HTML (vervangt 920)"""
+    """Title: Bestandsbeschrijvingen: Bestand 922 Tekstblokken HTML"""
     __tablename__ = "bst_922"
 
     bstnum = Column(Integer)
@@ -319,5 +319,5 @@ class bst_922(Base):
     txrgln = Column(Integer, primary_key=True)
 
     def __repr__(self):
-        return "<Tekstblokken HTML (vervangt 920)(%d)[mutkod=%s, thmodu=%s, thtsrt=%s, txtext=%s, txmodu=%s, txtsrt=%s, txkode=%s, txblnr=%s, txrgln=%s]>" % (self.bstnum, self.mutkod, self.thmodu, self.thtsrt, self.txtext, self.txmodu, self.txtsrt, self.txkode, self.txblnr, self.txrgln)
+        return "<Tekstblokken HTML(%d)[mutkod=%s, thmodu=%s, thtsrt=%s, txtext=%s, txmodu=%s, txtsrt=%s, txkode=%s, txblnr=%s, txrgln=%s]>" % (self.bstnum, self.mutkod, self.thmodu, self.thtsrt, self.txtext, self.txmodu, self.txtsrt, self.txkode, self.txblnr, self.txrgln)
 

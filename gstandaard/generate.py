@@ -59,9 +59,9 @@ def create_class(html_dir, file_no):
     code += '\n\nclass %s(Base):\n' % class_name
 
     html = get_bestand_html(html_dir, file_no)
-    fields = extract_struct(html.body.find('table', attrs={'class': 'zindextable'}))
+    fields = extract_struct(html.body.find('table', attrs={'class': 'w-100'}))
 
-    title = html.body.find('h1', attrs={'class': 'documentFirstHeading'}).string
+    title =  html.body.find('h1', attrs={'class': 'banner-content__title'}).text
 
     code += '    """Title: %s"""\n' % title
     code += '    __tablename__ = "%s"\n' % table_name

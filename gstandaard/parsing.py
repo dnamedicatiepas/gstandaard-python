@@ -69,22 +69,29 @@ def extract_struct(table):
 
     for entry in table.findChildren('tr')[1:]:
 
-        _desc, sr, size, fmt, _pos = map(lambda x: x.text, entry.findChildren('td'))
+        header_tag, _desc, sr, size_tag, fmt, _pos = entry.findChildren('td')
 
-        if sr:
-            key = int(sr[0])
+        if sr.text:
+            key = int(sr.text[0])
         else:
             key = 0
 
-        if fmt == 'N':
+        size = size_tag.text
+
+        if fmt.text == 'N':
             kind = 'Integer'
-            if '+' in size or ',' in size:
+            if ',' in size:
+                # TODO: deal with non-integers?
+                size = size.split('(')[0]
+            if '+' in size:
+                # TODO: deal with control numbers
                 size = size.split('(')[0]
         else:
             kind = 'String'
 
-        if entry.th.a:
-            name = entry.th.a.text.lower()
+        a_tag = header_tag.find("a")
+        if a_tag:
+            name = a_tag.text.lower()
         else:
             name = 'empty'
 

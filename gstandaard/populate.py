@@ -16,7 +16,7 @@ def populate_db(data_directory, beschrijvingen_directory, database):
         print('Parsing file %s ...' % get_inputpath(data_directory, file_no))
 
         html = get_bestand_html(beschrijvingen_directory, file_no)
-        fields = extract_struct(html.body.find('table', attrs={'class': 'zindextable'}))
+        fields = extract_struct(html.body.find('table', attrs={'class': 'w-100'}))
 
         fieldwidths = [x['size'] for x in fields]
         fmtstring = ' '.join('{}{}'.format(abs(fw), 'x' if fw < 0 else 's') for fw in fieldwidths)

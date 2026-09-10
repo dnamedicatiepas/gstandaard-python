@@ -19,7 +19,7 @@ def get_bestand_htmlpath(directory, name):
 
 
 def get_bestand_url(file_no):
-    BESTAND_BESCHRIJVINGEN_URL_PREFIX = 'https://www.z-index.nl/documentatie/bestandsbeschrijvingen/bestand?bestandsnaam='
+    BESTAND_BESCHRIJVINGEN_URL_PREFIX = 'https://www.z-index.nl/documentatie/bestandsbeschrijvingen/bestand/'
     return BESTAND_BESCHRIJVINGEN_URL_PREFIX + get_bestand_filename(file_no)
 
 

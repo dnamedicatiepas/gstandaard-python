@@ -32,7 +32,7 @@ def tsitnr2mfbpanrs(session, tsitnr):
 
 def get_protocols(session, fg_only=False):
     # Protocols -> Flow -> Vraag -> Vraag_Functie_Parameter -> Parameter
-    protocols = session.query(bst_690).join(bst_691).join(bst_692).join(bst_695).join(bst_685)
+    protocols = session.query(bst_690).filter_by(mfbpdvv=0).join(bst_691).join(bst_692).join(bst_695).join(bst_685)
 
     if fg_only:
         return protocols.filter(bst_685.thesaurus.has(tsnr=TSNR_CI, thakd4=THAKD4_F)).all()
